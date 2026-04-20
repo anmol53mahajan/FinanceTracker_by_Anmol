@@ -1,531 +1,605 @@
-# Smart Job Tracker Dashboard
+# Personal Finance and Expense Analytics App
 
-A production-style React dashboard project for tracking job applications, interview stages, follow-ups, and hiring outcomes with searchable records, filters, sorting, and analytics.
+A complete React application designed to help students, early-career professionals, and freelancers track expenses, monitor budgets, and understand spending behavior through practical analytics.
 
-This README is written as a complete PRD-aligned project document for Project 1 submission.
+This project is built as PRD 2: Personal Finance and Expense Analytics App.
 
----
+## Table of Contents
 
-## 1. Product Title
+1. Product Overview
+2. Problem Statement
+3. Product Goals
+4. Target Users
+5. Core Features
+6. Non-Functional Requirements
+7. Routes and Pages
+8. System Architecture
+9. Data Model
+10. React Concepts Used
+11. External Packages
+12. Folder Structure
+13. APIs and Integrations
+14. Analytics and Calculation Logic
+15. Validation Rules
+16. Setup and Run Instructions
+17. Available Scripts
+18. Usage Guide
+19. UI and UX Behavior
+20. Evaluation Criteria Mapping
+21. Future Improvements
+22. Student Details
 
-Smart Job Tracker Dashboard
+## 1. Product Overview
 
----
+Personal Finance and Expense Analytics App is a modern, single-page React application focused on personal money management.
+
+The app helps users:
+
+- Record income and expense transactions
+- Categorize financial activity
+- Set and track monthly budgets
+- Search and filter transaction history
+- Analyze spending behavior using charts and summary insights
+
+It simulates a real consumer finance product with practical user flows, reusable React architecture, and scalable code organization.
 
 ## 2. Problem Statement
 
-Job seekers apply to many companies through different sources such as LinkedIn, referrals, company career portals, and job boards. As the number of applications grows, manually tracking progress becomes difficult and error-prone.
+Many students and young professionals struggle to understand where their money goes every month.
 
-### Common problems faced by job seekers
+Expenses are usually spread across:
 
-- Forgetting where they applied
-- Missing interview schedules
-- Losing track of follow-ups
-- No visibility into search progress
-- Difficulty comparing offers and salary ranges
+- UPI payments
+- Credit card transactions
+- Subscription renewals
+- Cash spending
 
-Most candidates use spreadsheets or notes, which are not optimized for dynamic filtering, fast search, analytics, and workflow management.
+Without a structured tracking system, users cannot clearly answer:
 
-The goal of this project is to provide a smart dashboard that centralizes application tracking in a modern React UI, similar to a SaaS productivity product.
+- How much did I spend this month?
+- Which category consumes the most money?
+- Am I exceeding my monthly budget?
+- Where can I reduce unnecessary spending?
 
----
+Traditional approaches like raw spreadsheets or notes are often insufficient because they typically do not provide:
+
+- Fast categorization
+- Searchable transaction history
+- Dynamic filters
+- Real-time analytics
+- Visual trend insights
+
+This project addresses these gaps through an interactive React-based finance dashboard.
 
 ## 3. Product Goals
 
 ### Primary Goals
 
-- Add and manage job applications
-- Organize applications by stage
-- Search applications quickly
-- Filter and sort entries efficiently
-- View analytics of pipeline progress
+The system is designed to allow users to:
+
+- Record income and expense transactions
+- Categorize all financial activity
+- Monitor spending patterns over time
+- Track budget usage and remaining amount
+- Visualize financial insights through charts
 
 ### Secondary Goals
 
-- Deliver a clean, responsive dashboard experience
-- Practice advanced React architecture and reusable components
-- Implement scalable state management with Context and custom hooks
-
----
+- Build healthy spending habits through awareness
+- Improve financial decision making
+- Demonstrate scalable React architecture and reusable component patterns
 
 ## 4. Target Users
 
 ### Primary Users
 
-- Students applying for internships and placements
-- Developers switching jobs
-- Freelancers tracking job leads and contracts
+- Students managing day-to-day personal expenses
+- Early-career professionals planning monthly cash flow
+- Freelancers handling irregular income streams
 
 ### User Pain Points
 
-- Need centralized job tracking
-- Need interview reminders
-- Need fast search and discovery of old applications
-- Need analytics to understand conversion rates and bottlenecks
+Users frequently:
 
----
+- Overspend without noticing
+- Lose track of recurring subscriptions
+- Fail to review spending distribution by category
+- Lack clarity on monthly trends and budget status
 
-## 5. Core Functional Requirements
+## 5. Core Features
 
-### Feature 1: Add Job Application
+### Feature 1: Add Transactions
 
-Users can add a new job application through a validated form.
+Users can add financial entries with complete metadata.
 
-#### Required fields
+Supported transaction types:
 
-- Company Name
-- Job Role
-- Location
-- Salary Range
-- Application Platform
-- Status
-- Applied Date
-- Interview Date
+- Income
+- Expense
+
+Required fields:
+
+- Title
+- Amount
+- Category
+- Date
+- Transaction Type
 - Notes
 
-#### Validation Rules
+Expense categories include:
 
-- Company name is required
-- Job role is required
-- Applied date is required
+- Food
+- Travel
+- Rent
+- Shopping
+- Entertainment
+- Health
+- Utilities
+- Subscriptions
 
-#### Form Stack
+Form implementation:
 
-- react-hook-form for form state and performance
-- yup for schema validation
+- react-hook-form for controlled and performant form handling
+- yup for schema-based validation
 
-#### Example validation intent
+Additional behavior:
 
-- Company and role cannot be empty strings
-- Dates should follow valid date format
-- Optional fields should still be type-safe
+- Optional recurring flag for repetitive expenses
+- User-friendly validation errors
+- Toast notifications for success or failure states
 
----
+### Feature 2: Transaction List
 
-### Feature 2: View Applications List
+All transactions are displayed in an organized list/card layout.
 
-Display all job applications in a card or table view.
+Each item includes:
 
-Each item should show:
+- Title
+- Category
+- Amount
+- Date
+- Type
 
-- Company logo
-- Company name
-- Role
-- Status
-- Applied date
-- Salary range
+Actions available on each transaction:
 
-Actions per item:
+- Edit transaction
+- Delete transaction
 
-- Edit
-- Delete
-- Bookmark
+### Feature 3: Search Transactions
 
----
+Users can search transactions by:
 
-### Feature 3: Search
-
-Dynamic search while typing.
-
-Searchable fields:
-
-- Company name
-- Role
-
-Performance optimization:
-
-- Debounced input using a custom hook (for example, 500ms delay)
-
-Expected UX:
-
-- Results update automatically without submit button
-- Search is case-insensitive
-- Empty query returns full list
-
----
-
-### Feature 4: Filters
-
-Users can filter applications by:
-
-- Status
-- Platform
-- Location type
-
-Typical statuses:
-
-- Applied
-- Interviewing
-- Rejected
-- Offer
-
----
-
-### Feature 5: Sorting
-
-Sort options should include:
-
-- Applied Date
-- Salary
-- Company Name
+- Title
+- Notes
 
 Expected behavior:
 
-- Supports ascending/descending order
-- Works on top of active search and filters
+- Dynamic filtering as the user types
+- Optimized search experience through debouncing
 
----
+### Feature 4: Filtering
 
-### Feature 6: Job Pipeline Tabs
+Transactions can be filtered by:
 
-Applications are segmented into lifecycle tabs:
+- Category
+- Transaction type
+- Date range
 
-- Applied
-- Interview Scheduled
-- Offer Received
-- Rejected
+Example category filters:
 
-Each tab renders only relevant entries and should show a zero-state message if empty.
+- Food
+- Travel
+- Rent
+- Subscriptions
 
----
+### Feature 5: Sorting
 
-### Feature 7: Bookmark Important Jobs
+Sorting options:
 
-Users can mark selected applications as bookmarked and quickly access them in a dedicated list or section.
+- Date
+- Amount
+- Category
 
----
+Both ascending and descending sort directions can be supported depending on UI preference.
 
-### Feature 8: Dashboard Analytics
+### Feature 6: Budget Tracking
 
-The dashboard should present key pipeline metrics:
+Users can define a monthly budget and monitor consumption.
 
-- Total applications
-- Interviews scheduled
-- Offers received
-- Rejections
+Budget section displays:
 
-Charts to include:
+- Monthly budget amount
+- Total spending
+- Remaining budget
+- Percentage used
 
-- Pie chart for application stages
-- Monthly applications trend graph
+Example:
 
----
+- Monthly Budget: INR 50,000
+
+### Feature 7: Analytics Dashboard
+
+Dashboard provides high-level financial insights.
+
+Key metrics:
+
+- Total Income
+- Total Expenses
+- Net Balance
+- Top Spending Category
+
+Visual analytics:
+
+- Pie chart: spending by category
+- Line chart: monthly spending trend
+- Bar chart: income vs expense comparison
+
+### Feature 8: Recurring Expense Tracking
+
+Users can mark expenses as recurring, such as:
+
+- Netflix subscription
+- Rent
+- Gym membership
+
+Recurring entries are highlighted in transaction views so users can quickly identify fixed monthly commitments.
 
 ## 6. Non-Functional Requirements
 
-The application must:
+The system is designed to:
 
-- Load quickly
-- Support responsive layout on mobile and desktop
-- Handle empty states gracefully
-- Show loading feedback during API calls
-- Maintain a clean and intuitive UI hierarchy
+- Work well on mobile screens
+- Load quickly and remain responsive
+- Show loading states during async actions
+- Handle empty states clearly when no data is present
 
-Performance and UX guidance:
+## 7. Routes and Pages
 
-- Debounced search to prevent unnecessary renders
-- Lightweight reusable UI components
-- Optional local storage for persistence
+Routing is implemented using React Router DOM.
 
----
+Core routes:
 
-## 7. Pages and Route Requirements
+- /dashboard: financial overview and summary widgets
+- /transactions: full transaction listing with search, filter, sort
+- /transactions/new: add transaction form
+- /budget: budget tracking and usage indicators
+- /analytics: detailed chart visualizations
 
-Use React Router DOM.
+## 8. System Architecture
 
-### Required routes from PRD
+The project follows a modular architecture where responsibilities are separated into pages, reusable components, hooks, services, and utilities.
 
-- /dashboard
-- /applications
-- /applications/new
-- /applications/:id
-- /analytics
+### High-Level Design
 
-### Current project route structure in this repository
+- Presentation layer: reusable UI components and pages
+- State layer: FinanceContext for global finance state
+- Hook layer: reusable domain-specific hooks
+- Service layer: API integrations through a dedicated service module
+- Utility layer: formatting and finance helper logic
 
-- /dashboard
-- /transactions
-- /transactions/new
-- /transactions/:transactionId/edit
-- /budget
-- /analytics
+### State Management Strategy
 
-This means the current codebase already demonstrates the same architectural pattern (list page, add/edit flow, analytics page, shared layout). It can be adapted to Job Tracker naming and data shape with minimal structural changes.
+Global state uses Context API to avoid prop drilling across pages.
 
----
+Finance context typically manages:
 
-## 8. API Requirements
+- transactions
+- budget
+- addTransaction()
+- updateTransaction()
+- deleteTransaction()
 
-### Mock Jobs API
-
-- Endpoint: https://dummyjson.com/products
-- Purpose: Simulate API integration for job card/list rendering
-
-### Company Logo API
-
-- Pattern: https://logo.clearbit.com/{domain}
-- Example: https://logo.clearbit.com/google.com
-- Purpose: Render recognizable company logos in list cards
-
-### Axios
-
-Use Axios for all HTTP requests and error handling strategy.
-
-Recommended handling:
-
-- Loading states during request lifecycle
-- Toast or inline error messaging on failure
-- Defensive fallbacks for missing API values
-
----
+This design keeps data operations centralized and UI components focused on rendering.
 
 ## 9. Data Model
 
-### Application Object
+### Transaction Object
 
-```js
+```json
 {
-	id: string,
-	company: string,
-	role: string,
-	location: string,
-	salary: number,
-	platform: string,
-	status: string,
-	appliedDate: date,
-	interviewDate: date,
-	notes: string,
-	bookmarked: boolean
+	"id": "string",
+	"title": "string",
+	"amount": 0,
+	"category": "string",
+	"type": "income | expense",
+	"date": "date",
+	"notes": "string",
+	"recurring": false
 }
 ```
 
-### Suggested enum-like values
+### Budget Object
 
-- status: Applied | Interview Scheduled | Offer Received | Rejected
-- platform: LinkedIn | Referral | Company Site | Job Board | Other
-- location: Remote | Hybrid | Onsite
+```json
+{
+	"monthlyBudget": 0
+}
+```
 
----
-
-## 10. React Concepts and Architecture
+## 10. React Concepts Used
 
 ### useState
 
-Used for UI-level state, such as:
+Used for local state such as:
 
-- search query
-- filter options
-- selected sort
-- tab selection
-- modal visibility
+- Form inputs
+- Search query
+- Filter options
+- Sort configuration
+- Local UI states
 
 ### useEffect
 
 Used for:
 
-- initial data fetch
-- analytics recalculation dependencies
-- synchronization with local storage
+- Recalculating analytics on transaction updates
+- Handling side effects for data loading and updates
 
 ### Context API
 
-Use a global ApplicationContext to avoid prop drilling.
-
-Store in context:
-
-- applications
-- addApplication
-- deleteApplication
-- updateApplication
-- toggleBookmark
-
-Provider placement:
-
-- Wrap the entire app in ApplicationProvider
+FinanceContext provides global, shared finance data and actions throughout the app.
 
 ### Custom Hooks
 
-- useApplications: CRUD orchestration
-- useDebounce: search optimization
-- useLocalStorage: persistent browser state
+Reusable hooks used in the project:
+
+- useTransactions: transaction CRUD logic
+- useBudget: budget metrics and remaining calculations
+- useCurrency: consistent currency formatting and conversion helpers
+- useDebounce: optimized search input behavior
 
 ### React Router DOM
 
-Route-based architecture for Dashboard, Applications, Add/Edit, and Analytics pages.
+Navigation across the required page structure:
 
----
+- /dashboard
+- /transactions
+- /transactions/new
+- /budget
+- /analytics
 
-## 11. Suggested NPM Packages
+## 11. External Packages
 
-Core stack for this PRD:
+Required packages used:
 
-- react-router-dom
-- axios
-- react-icons
-- react-toastify
-- recharts
-- react-hook-form
-- yup
-- date-fns
-- framer-motion
+- react-router-dom: routing and page navigation
+- axios: API requests and HTTP abstraction
+- react-icons: iconography for UI clarity
+- react-toastify: non-blocking user notifications
+- react-hook-form: performant and scalable form handling
+- yup: schema validation
+- recharts: analytics charts
+- date-fns: date formatting and range utilities
+- uuid: unique transaction IDs
+- framer-motion: smooth UI animations
 
-These are already aligned with the current project dependency profile in package.json.
+Core project stack:
 
----
+- React
+- Vite
+- Tailwind CSS
+- ESLint
 
-## 12. Suggested Folder Structure
+## 12. Folder Structure
+
+Current project structure:
 
 ```text
 src/
+	assets/
 	components/
-		Navbar/
-		JobCard/
-		Filters/
-		SearchBar/
-		Charts/
-
-	pages/
-		Dashboard/
-		Applications/
-		AddApplication/
-		Analytics/
-
+		ChartsSection.jsx
+		FiltersBar.jsx
+		Layout.jsx
+		PageHeader.jsx
+		StatCard.jsx
+		TransactionCard.jsx
+		ui/
+			badge.jsx
+			button.jsx
+			card.jsx
+			empty-state.jsx
+			input.jsx
+			select.jsx
+			textarea.jsx
 	context/
-		ApplicationContext/
-
+		FinanceContext.jsx
 	hooks/
-		useApplications/
-		useDebounce/
-		useLocalStorage/
-
+		useBudget.js
+		useCurrency.js
+		useDebounce.js
+		useTransactions.js
+	pages/
+		AddTransaction.jsx
+		Analytics.jsx
+		Budget.jsx
+		Dashboard.jsx
+		Transactions.jsx
 	services/
 		api.js
-
 	utils/
-		helpers.js
+		currencyFormatter.js
+		finance.js
+		yupResolver.js
+	App.css
+	App.jsx
+	index.css
+	main.jsx
 ```
 
----
+This structure keeps business logic, display components, and cross-cutting utilities cleanly separated for maintainability.
 
-## 13. Evaluation Criteria
+## 13. APIs and Integrations
 
-| Criteria | Weight |
-|---|---:|
-| React architecture | 25% |
-| Feature completeness | 25% |
-| State management | 20% |
-| UI/UX quality | 15% |
-| Code quality | 15% |
+### Currency Exchange API
 
-### How this project should score well
+Recommended endpoint example:
 
-- Keep component responsibilities clean and reusable
-- Ensure all required features are demonstrable in UI
-- Manage shared data through Context + hooks
-- Maintain consistent design system and visual hierarchy
-- Use meaningful naming, modular utilities, and validation
+- https://api.exchangerate-api.com
 
----
+Use case:
 
-## Functional Walkthrough (End-to-End)
+- Optional conversion for users handling multiple currencies
+- Display converted values in analytics or summaries
 
-1. Open dashboard to view top-line metrics.
-2. Navigate to applications page.
-3. Add a new job application via validated form.
-4. Search by company/role with debounce behavior.
-5. Apply filters and sorting controls.
-6. Move through pipeline tabs by status.
-7. Bookmark important jobs.
-8. Open analytics page to inspect stage distribution and monthly trend.
+### Financial News API (Optional)
 
----
+Recommended endpoint example:
 
-## UI/UX Notes
+- https://newsapi.org
 
-- Responsive cards and layout grid
-- High contrast typography and status indicators
-- Empty-state screens when no data is available
-- Loading feedback during API data fetching
-- Quick actions for edit/delete/bookmark
+Use case:
 
----
+- Optional news feed on dashboard or analytics page to increase finance awareness
 
-## Error Handling and Edge Cases
+### API Layer Pattern
 
-- Required field validation in forms
-- Graceful handling of malformed salary/date input
-- API failure fallback message
-- Empty search result handling
-- No-applications analytics fallback state
+All external API calls should be centralized in the service module to:
 
----
+- Keep components clean
+- Avoid repeated request code
+- Improve testability and maintainability
 
-## Suggested Future Enhancements
+## 14. Analytics and Calculation Logic
 
-- Authentication and multi-user support
-- Follow-up reminder notifications
-- Export applications to CSV/PDF
-- Offer comparison matrix
-- Interview preparation checklist per application
-- Kanban drag-and-drop stage board
+Common formulas used by the app:
 
----
+- Total Income = sum of amounts where type is income
+- Total Expenses = sum of amounts where type is expense
+- Net Balance = Total Income minus Total Expenses
+- Remaining Budget = Monthly Budget minus Total Expenses
+- Budget Usage Percentage = (Total Expenses divided by Monthly Budget) multiplied by 100
 
-## Setup and Run Instructions
+Category breakdown for pie chart:
+
+- Group expense transactions by category
+- Aggregate totals per category
+- Convert to chart dataset format
+
+Monthly trend for line chart:
+
+- Group entries by month and year
+- Plot monthly totals to reveal spending trajectory
+
+Income vs Expense bar chart:
+
+- Aggregate totals per month for both income and expense
+- Visualize side-by-side comparison for each period
+
+Top spending category:
+
+- Identify category with highest total expense amount
+
+## 15. Validation Rules
+
+Typical validation constraints with yup:
+
+- Title is required and non-empty
+- Amount is required and must be greater than zero
+- Category is required
+- Type must be income or expense
+- Date is required and valid
+- Notes can be optional but length constrained if needed
+
+User experience expectations:
+
+- Field-level validation messages
+- Prevent submit on invalid data
+- Clear error states and helpful prompts
+
+## 16. Setup and Run Instructions
 
 ### Prerequisites
 
-- Node.js (LTS recommended)
+- Node.js (recommended: latest LTS)
 - npm
 
-### Install dependencies
+### Installation
 
 ```bash
 npm install
 ```
 
-### Start development server
+### Start Development Server
 
 ```bash
 npm run dev
 ```
 
-### Build for production
+### Build for Production
 
 ```bash
 npm run build
 ```
 
-### Preview production build
+### Preview Production Build
 
 ```bash
 npm run preview
 ```
 
----
+### Lint
 
-## Tech Stack Summary
+```bash
+npm run lint
+```
 
-- Frontend: React + Vite
-- Routing: React Router DOM
-- Forms: React Hook Form + Yup
-- API Client: Axios
-- Charts: Recharts
-- Notifications: React Toastify
-- Utility Libraries: date-fns, uuid
-- Styling: Tailwind CSS
-- Motion: Framer Motion
+## 17. Available Scripts
 
----
+Project scripts:
 
-## Submission Notes
+- npm run dev: starts Vite development server
+- npm run build: creates optimized production build
+- npm run lint: runs ESLint checks
+- npm run preview: previews production build locally
 
-This README is intentionally long and detailed to satisfy PRD documentation expectations, covering product intent, user problems, architecture, feature specification, technical implementation guidance, and evaluation readiness.
+## 18. Usage Guide
 
----
+Suggested user flow:
 
-## Student Details
+1. Navigate to Add Transaction page and create income and expense entries.
+2. Open Transactions page to search, filter, and sort records.
+3. Set monthly budget in Budget page.
+4. Review Dashboard metrics for overall financial health.
+5. Open Analytics page to inspect visual category and trend insights.
+6. Mark recurring expenses to track fixed commitments clearly.
 
-Name: anmol mahajan
+## 19. UI and UX Behavior
 
-Roll Number: 25bcs10037
+The app emphasizes practical financial clarity through:
+
+- Readable card-based summaries
+- Quick-access filters and search controls
+- Meaningful loading indicators
+- Empty-state components for first-time users
+- Consistent visual hierarchy for amounts and categories
+- Responsive layouts for mobile and desktop usage
+
+## 20. Evaluation Criteria Mapping
+
+This implementation aligns with the evaluation rubric:
+
+- Feature completeness (25%): includes all major PRD flows
+- React architecture (25%): modular pages, components, hooks, and context
+- State management (20%): centralized finance state with Context API
+- UI design (15%): responsive, reusable UI patterns, chart-driven insights
+- Code quality (15%): structured folders, utility separation, validation, and linting
+
+## 21. Future Improvements
+
+Possible enhancements:
+
+- Persistent data storage using backend or cloud database
+- Authentication and user accounts
+- Recurring transaction auto-generation each month
+- Advanced analytics with trend predictions
+- Export to CSV or PDF reports
+- Budget alerts and notification rules
+- Multi-currency dashboard with live exchange updates
+- Financial news integration panel
+
+## 22. Student Details
+
+Name: Anmol Mahajan  
+Roll Number: 25BCS10037
+
